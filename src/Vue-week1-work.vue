@@ -17,9 +17,9 @@
                     <td><small>{{ drinks.description }}</small></td>
                     <td>{{ drinks.price }}</td>
                     <td>
-                        <button type="button" class="btn-sm" @click="drinks.stock--" :disabled="drinks.stock < 1">－</button>
+                        <button type="button" class="btn-sm" @click="drinks.stock--" :disabled="drinks.stock < 1" :style="{ visibility: !isShow ? 'visible' : 'hidden' }">－</button>
                         {{ drinks.stock }}
-                        <button type="button" class="btn-sm" @click="drinks.stock++">＋</button>
+                        <button type="button" class="btn-sm" @click="drinks.stock++" :style="{ visibility: !isShow ? 'visible' : 'hidden' }">＋</button>
                     </td>
                     <td>
                         <button type="button" class="btn btn-secondary" @click="editDrink(drinks)">內容編輯</button>
@@ -46,7 +46,7 @@
             <label class="form-label">庫存</label>
             <input type="number" class="form-control" v-model="tempBox.stock">
         </div>
-        <button type="submit" class="btn btn-primary me-2" @click="tempBox= {} ; isShow = false">取消</button>
+        <button type="submit" class="btn btn-primary me-2" @click="tempBox= ''; isShow = false">取消</button>
         <button type="submit" class="btn btn-primary" @click="saveChanges">儲存變更</button>
         </div>
     </div>
@@ -70,7 +70,6 @@ const isShow = ref(false);
 const tempBox = ref({});
 const editDrink = (item) => {
     tempBox.value = { ...item }; // 複製一個新的物件來編輯
-    console.log(tempBox);
     isShow.value = true;
 };
 
@@ -88,6 +87,6 @@ const saveChanges = () => {
     if (index !== -1) {
         drinkTea.value[index] = tempBox.value;
     }
-    tempBox.value = {};
+    tempBox.value = '';
 }
 </script>
